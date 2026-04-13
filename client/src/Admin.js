@@ -1,30 +1,76 @@
 import "./App.css";
-import { useState } from "react";
-import adminBg from "./assets/admin-bg.png"; // or .jpg
+import { useState, useEffect } from "react";
+import adminBg from "./assets/admin-bg.png";
+import { Bar } from "react-chartjs-2";
+import Loader from "./Loader";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title
+} from "chart.js";
+
+// ✅ Register chart (TOP LEVEL)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
 
 function Admin() {
 
-  // 🔥 STATES
+  // 🔥 LOADING STATE
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  // 🔥 SEARCH + FILTER STATE
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
 
-  // 🔥 SAMPLE DATA (later from backend)
+  // 🔥 SAMPLE DATA
   const tasks = [
     { title: "Food Distribution", location: "Pune", severity: "high" },
     { title: "Teaching Kids", location: "Mumbai", severity: "medium" },
     { title: "Medical Camp", location: "Delhi", severity: "high" }
   ];
 
+  // 🔥 CHART DATA
+  const chartData = {
+    labels: ["Low", "Medium", "High"],
+    datasets: [
+      {
+        label: "Tasks by Severity",
+        data: [2, 1, 2],
+        backgroundColor: ["#4caf50", "#ff9800", "#f44336"],
+        borderRadius: 8
+      }
+    ]
+  };
+
+  // ⏳ LOADER
+  if (loading) return <Loader />;
+
   return (
     <div
-  className="admin-container"
-  style={{
-    backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${adminBg})`
-  }}
->
+      className="admin-container"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${adminBg})`
+      }}
+    >
 
       {/* TITLE */}
       <h2 className="admin-title">📊 Admin Dashboard</h2>
+
+      {/* 📊 CHART */}
+      <div className="admin-section">
+        <h3>📊 Task Overview</h3>
+        <div className="chart-container">
+          <Bar data={chartData} />
+        </div>
+      </div>
 
       {/* STATS */}
       <div className="admin-stats">
@@ -60,7 +106,7 @@ function Admin() {
         </select>
       </div>
 
-      {/* TASK LIST */}
+      {/* 📍 TASK LIST */}
       <div className="admin-section">
         <h3>📍 Tasks</h3>
 
@@ -79,7 +125,7 @@ function Admin() {
         }
       </div>
 
-      {/* VOLUNTEERS */}
+      {/* 👥 VOLUNTEERS */}
       <div className="admin-section">
         <h3>👥 Volunteers</h3>
         <div className="list-card">Rahul - Teaching - Pune</div>

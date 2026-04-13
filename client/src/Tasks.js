@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import { toast } from "react-toastify"; // ✅ FIXED (top)
+import { toast } from "react-toastify";
 
 function Tasks() {
   const [title, setTitle] = useState("");
@@ -13,18 +13,17 @@ function Tasks() {
       title,
       description,
       location,
-      severity
+      severity,
     };
 
     console.log(data);
 
-    // ✅ Toast used here
+    // ✅ Toast notification
     toast.success("Task submitted successfully 🚀");
   };
 
   return (
     <div className="task-wrapper">
-
       <div className="task-card">
 
         <h2>Create a Task</h2>
@@ -72,7 +71,6 @@ function Tasks() {
         </p>
 
       </div>
-
     </div>
   );
 }

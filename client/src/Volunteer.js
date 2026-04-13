@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 function Volunteer() {
   const [name, setName] = useState("");

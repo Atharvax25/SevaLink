@@ -29,24 +29,20 @@ function App() {
   return (
     <Router>
 
-      {/* 🔥 SCROLL PROGRESS BAR */}
       <div
         className="scroll-bar"
         style={{ width: `${scroll}%` }}
       ></div>
 
-      {/* NAVBAR */}
       <Navbar />
       <ToastContainer />
 
-      {/* ROUTES */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
-      
 
     </Router>
   );
