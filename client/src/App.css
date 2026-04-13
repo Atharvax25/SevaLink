@@ -216,3 +216,58 @@ body {
 .card:hover::before {
   transform: scaleX(1);
 }
+/* FOOTER */
+.footer {
+  background: #0d47a1;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.footer h2 {
+  margin-bottom: 10px;
+}
+
+.footer-links {
+  margin: 15px 0;
+}
+
+.footer-links a {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  color: #ffcc80;
+}
+
+.copyright {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #ccc;
+}
+.task-container {
+  max-width: 500px;
+  margin: 60px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+
+.task-container input,
+.task-container textarea {
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.task-container textarea {
+  height: 100px;
+}
+
+.task-container button {
+  align-self: center;
+}

@@ -4,7 +4,7 @@ import "./App.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
-
+import Footer from "./Footer";
 function Home() {
 
   useEffect(() => {
@@ -68,8 +68,10 @@ function Home() {
         </div>
 
       </div>
+      <Footer />
 
     </div>
+    
   );
 }
 
