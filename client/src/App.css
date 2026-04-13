@@ -330,3 +330,110 @@ body {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
+.admin-container {
+  padding: 40px;
+}
+
+.admin-stats {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: #0d47a1;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 200px;
+}
+
+.admin-section {
+  margin-top: 30px;
+}
+
+.admin-section ul {
+  margin-top: 10px;
+}
+/* ADMIN BACKGROUND */
+.admin-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px;
+  color: white;
+}
+
+/* TITLE */
+.admin-title {
+  text-align: center;
+  font-size: 34px;
+  margin-bottom: 30px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* STATS GRID */
+.admin-stats {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+/* STAT CARDS */
+.stat-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  padding: 25px;
+  width: 200px;
+  border-radius: 15px;
+  text-align: center;
+
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT 🔥 */
+.stat-card:hover {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* SECTION */
+.admin-section {
+  margin-top: 40px;
+}
+
+/* SECTION TITLE */
+.admin-section h3 {
+  margin-bottom: 10px;
+}
+
+/* LIST CARDS */
+.list-card {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+
+  transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.list-card:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(10px);
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
