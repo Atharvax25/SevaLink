@@ -32,22 +32,24 @@ function Home() {
 
       {/* FEATURES (CARDS BACK 🔥) */}
       <div className="features">
-        <div className="card">
-          <h3>📍 Add Tasks</h3>
-          <p>NGOs can post tasks easily</p>
-        </div>
+  <div className="card">
+    <div className="icon">📍</div>
+    <h3>Add Tasks</h3>
+    <p>NGOs can post tasks and manage needs بسهولة</p>
+  </div>
 
-        <div className="card">
-          <h3>🙋 Volunteers</h3>
-          <p>People can register and help</p>
-        </div>
+  <div className="card">
+    <div className="icon">🙋</div>
+    <h3>Volunteers</h3>
+    <p>People can join and contribute to real-world impact</p>
+  </div>
 
-        <div className="card">
-          <h3>⚡ Smart Match</h3>
-          <p>Connect right people to right tasks</p>
-        </div>
-      </div>
-    </div>
+  <div className="card">
+    <div className="icon">⚡</div>
+    <h3>Smart Match</h3>
+    <p>Automatically connect the right people to tasks</p>
+  </div>
+</div>
   );
 }
 

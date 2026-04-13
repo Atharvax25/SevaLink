@@ -167,24 +167,52 @@ body {
 .features {
   display: flex;
   justify-content: center;
-  gap: 25px;
-  padding: 60px 20px;
+  gap: 30px;
+  padding: 70px 20px;
   flex-wrap: wrap;
+  background: #f9f9f9;
 }
 
+/* CARD STYLE */
 .card {
   background: white;
-  padding: 25px;
-  width: 250px;
-  border-radius: 10px;
+  padding: 30px;
+  width: 260px;
+  border-radius: 15px;
   text-align: center;
 
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* ICON */
+.icon {
+  font-size: 40px;
+  margin-bottom: 15px;
 }
 
 /* HOVER EFFECT 🔥 */
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* GLOW EFFECT */
+.card::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 0;
+  left: 0;
+  background: #ff9800;
+  transform: scaleX(0);
+  transition: 0.4s;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
 }
