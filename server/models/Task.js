@@ -63,6 +63,30 @@ const volunteerRefSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    skillMatchScore: {
+      type: Number,
+      default: 0,
+    },
+    distanceScore: {
+      type: Number,
+      default: 0,
+    },
+    availabilityScore: {
+      type: Number,
+      default: 0,
+    },
+    performanceScore: {
+      type: Number,
+      default: 0,
+    },
+    distanceKm: {
+      type: Number,
+      default: null,
+    },
+    activeAssignments: {
+      type: Number,
+      default: 0,
+    },
   },
   { _id: false }
 );
@@ -84,10 +108,57 @@ const taskSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    geoLocation: {
+      lat: {
+        type: Number,
+        default: null,
+      },
+      lng: {
+        type: Number,
+        default: null,
+      },
+    },
     severity: {
       type: String,
-      enum: ["low", "medium", "high"],
+      enum: ["low", "medium", "high", "critical"],
       default: "medium",
+    },
+    urgencyScore: {
+      type: Number,
+      default: 56,
+    },
+    category: {
+      type: String,
+      default: "General support",
+      trim: true,
+    },
+    imageUrl: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    imageTag: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    imageTags: {
+      type: [String],
+      default: [],
+    },
+    escalationReason: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    ngoId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    sharedVisibility: {
+      type: Boolean,
+      default: true,
     },
     skills: {
       type: [String],
@@ -95,8 +166,17 @@ const taskSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["open", "pending_confirmation", "assigned", "completed"],
+      enum: ["pending", "open", "pending_confirmation", "assigned", "completed"],
       default: "open",
+    },
+    assignedTo: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    matchingScore: {
+      type: Number,
+      default: 0,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

@@ -1,16 +1,7 @@
 const User = require("../models/User");
+const { normalizeGeoPoint, toNumber } = require("../utils/geo");
+const { normalizeSkills } = require("../utils/skills");
 const { hashPassword, verifyPassword, signToken } = require("../utils/auth");
-
-function normalizeSkills(skillsInput) {
-  if (Array.isArray(skillsInput)) {
-    return [...new Set(skillsInput.map((skill) => String(skill).trim().toLowerCase()).filter(Boolean))];
-  }
-
-  return [...new Set(String(skillsInput || "")
-    .split(",")
-    .map((skill) => skill.trim().toLowerCase())
-    .filter(Boolean))];
-}
 
 function sanitizeUser(user) {
   return {
@@ -18,13 +9,32 @@ function sanitizeUser(user) {
     name: user.name,
     email: user.email,
     role: user.role,
+    organizationName: user.organizationName || "",
+    location: user.location || "",
+    availability: user.availability !== false,
     skills: user.skills || [],
+    availabilityScore: user.availabilityScore ?? 0.75,
+    rating: user.rating ?? 4,
+    geoLocation: user.geoLocation || { lat: null, lng: null },
+    points: user.points || 0,
+    badges: user.badges || [],
+    tasksCompleted: user.tasksCompleted || 0,
   };
 }
 
 async function register(req, res) {
   try {
-    const { name, email, password, role, skills } = req.body;
+    const {
+      name,
+      email,
+      password,
+      role,
+      skills,
+      organizationName,
+      availabilityScore,
+      latitude,
+      longitude,
+    } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Name, email, and password are required" });
@@ -36,6 +46,8 @@ async function register(req, res) {
 
     const normalizedRole = role === "NGO" ? "NGO" : "Volunteer";
     const normalizedSkills = normalizeSkills(skills);
+    const normalizedGeoLocation = normalizeGeoPoint(latitude, longitude);
+    const parsedAvailabilityScore = toNumber(availabilityScore);
 
     if (normalizedRole === "Volunteer" && normalizedSkills.length === 0) {
       return res.status(400).json({ message: "Volunteer skills are required for registration" });
@@ -52,7 +64,17 @@ async function register(req, res) {
       email: normalizedEmail,
       passwordHash: hashPassword(password),
       role: normalizedRole,
+      organizationName: String(organizationName || (normalizedRole === "NGO" ? name : ""))
+        .trim(),
+      location: normalizedRole === "Volunteer" ? String(req.body.location || "").trim() : "",
+      availability: normalizedRole === "Volunteer",
       skills: normalizedRole === "Volunteer" ? normalizedSkills : [],
+      availabilityScore:
+        normalizedRole === "Volunteer" && parsedAvailabilityScore !== null
+          ? Math.max(0, Math.min(1, parsedAvailabilityScore))
+          : 0.75,
+      rating: normalizedRole === "Volunteer" ? 4 : 0,
+      geoLocation: normalizedGeoLocation || { lat: null, lng: null },
     });
 
     const safeUser = sanitizeUser(user);
@@ -97,7 +119,9 @@ async function login(req, res) {
 
 async function me(req, res) {
   try {
-    const user = await User.findById(req.user.id).select("name email role skills");
+    const user = await User.findById(req.user.id).select(
+      "name email role skills organizationName location availability availabilityScore rating geoLocation points badges tasksCompleted"
+    );
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
