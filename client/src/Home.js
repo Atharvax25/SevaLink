@@ -123,6 +123,44 @@ const impactAreas = [
   },
 ];
 
+const teamMembers = [
+  {
+    name: "Atharva Holsambre",
+    role: "Full Stack Developer",
+    contribution: "Frontend + Backend + AI Module Integration",
+    badge: "Core Developer",
+    icon: "👨‍💻",
+  },
+  {
+    name: "Anish Ghodke",
+    role: "Backend Developer",
+    contribution: "Backend APIs + Login Functionality",
+    badge: "Core Developer",
+    icon: "👨‍💻",
+  },
+  {
+    name: "Shrushti Bhujbal",
+    role: "Frontend Developer",
+    contribution: "UI Development",
+    badge: "Core Developer",
+    icon: "👨‍💻",
+  },
+  {
+    name: "Tina Shirsath",
+    role: "Backend Developer",
+    contribution: "Backend Development",
+    badge: "Core Developer",
+    icon: "👨‍💻",
+  },
+  {
+    name: "Ayushi Holey",
+    role: "UI/UX Designer",
+    contribution: "UI Design Ideas + Matching Functionality",
+    badge: "UI Specialist",
+    icon: "🎨",
+  },
+];
+
 const revealUp = {
   hidden: { opacity: 0, y: 48 },
   visible: (delay = 0) => ({
@@ -278,6 +316,60 @@ function ImpactCard({ item, index }) {
       <h3>{item.title}</h3>
       <p>{item.description}</p>
       <span className="impact-highlight">{item.highlight}</span>
+    </motion.article>
+  );
+}
+
+function TeamCard({ member, index }) {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const glowX = useSpring(50, { stiffness: 160, damping: 20 });
+  const glowY = useSpring(50, { stiffness: 160, damping: 20 });
+  const glow = useMotionTemplate`radial-gradient(circle at ${glowX}% ${glowY}%, rgba(100, 255, 218, 0.24), transparent 48%)`;
+
+  const handleMove = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const px = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const py = ((event.clientY - bounds.top) / bounds.height) * 100;
+
+    glowX.set(px);
+    glowY.set(py);
+
+    const rotateY = ((event.clientX - bounds.left) / bounds.width - 0.5) * 12;
+    const rotateX = (((event.clientY - bounds.top) / bounds.height) - 0.5) * -12;
+    setRotation({ x: rotateX, y: rotateY });
+  };
+
+  const resetCard = () => {
+    setRotation({ x: 0, y: 0 });
+    glowX.set(50);
+    glowY.set(50);
+  };
+
+  return (
+    <motion.article
+      className="team-card glass-panel"
+      custom={0.08 * index}
+      variants={revealUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      whileHover={{ y: -10, scale: 1.05 }}
+      onMouseMove={handleMove}
+      onMouseLeave={resetCard}
+      style={{
+        transform: `perspective(1100px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+      }}
+    >
+      <motion.span className="team-card-glow" style={{ background: glow }} />
+      <div className="team-card-topline">
+        <span className="team-icon" aria-hidden="true">
+          {member.icon}
+        </span>
+        <span className="team-badge">{member.badge}</span>
+      </div>
+      <h3>{member.name}</h3>
+      <p className="team-role">{member.role}</p>
+      <p className="team-contribution">{member.contribution}</p>
     </motion.article>
   );
 }
@@ -680,6 +772,38 @@ function Home() {
             <p>Built to coordinate requests, response teams, and trusted partners across changing needs.</p>
           </div>
         </motion.div>
+      </motion.section>
+
+      <motion.section
+        id="team"
+        className="team-section"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.18 }}
+      >
+        <motion.div className="section-heading" custom={0} variants={revealUp}>
+          <span className="eyebrow">Team & Contributors</span>
+          <h2>Meet the Team Behind SevaLink</h2>
+          <p>
+            Built collaboratively with a focus on innovation, scalability, and
+            real-world impact.
+          </p>
+        </motion.div>
+
+        <div className="team-grid">
+          {teamMembers.map((member, index) => (
+            <TeamCard key={member.name} member={member} index={index + 1} />
+          ))}
+        </div>
+
+        <motion.p
+          className="team-section-note"
+          custom={0.32}
+          variants={revealUp}
+        >
+          Built collaboratively with a focus on innovation, scalability, and
+          real-world impact.
+        </motion.p>
       </motion.section>
 
       <Footer />

@@ -1,11 +1,13 @@
 import "./App.css";
 import Navbar from "./Navbar";
+import Chatbot from "./components/Chatbot";
 
 import {
   BrowserRouter as Router,
   Navigate,
   Route,
   Routes,
+  useLocation,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -20,6 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 function AppShell() {
   const [showIntro, setShowIntro] = useState(true);
   const [scroll, setScroll] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -54,6 +57,8 @@ function AppShell() {
     return <IntroScreen />;
   }
 
+  const showChatbot = location.pathname !== "/auth";
+
   return (
     <>
       <div className="scroll-bar" style={{ width: `${scroll}%` }}></div>
@@ -68,6 +73,8 @@ function AppShell() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/auth" element={<Auth />} />
       </Routes>
+
+      {showChatbot ? <Chatbot /> : null}
     </>
   );
 }

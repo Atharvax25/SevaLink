@@ -7,6 +7,7 @@ const path = require("path");
 
 const authRoutes = require("./routes/authRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
@@ -48,6 +49,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/chat", chatRoutes);
 app.use("/api/tasks", taskRoutes);
 
 async function startServer() {

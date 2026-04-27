@@ -24,8 +24,6 @@ const initialState = {
     location: "",
     skills: "",
     availabilityScore: "0.75",
-    latitude: "",
-    longitude: "",
   },
   forgot: {
     email: "",
@@ -496,32 +494,6 @@ function Auth() {
                             <option value="0.65">Moderate</option>
                             <option value="0.95">Highly available</option>
                           </select>
-                        </label>
-
-                        <label>
-                          Latitude
-                          <input
-                            type="number"
-                            step="any"
-                            placeholder="19.0760"
-                            value={formData.register.latitude}
-                            onChange={(event) =>
-                              handleChange("register", "latitude", event.target.value)
-                            }
-                          />
-                        </label>
-
-                        <label>
-                          Longitude
-                          <input
-                            type="number"
-                            step="any"
-                            placeholder="72.8777"
-                            value={formData.register.longitude}
-                            onChange={(event) =>
-                              handleChange("register", "longitude", event.target.value)
-                            }
-                          />
                         </label>
                       </div>
                     </>
